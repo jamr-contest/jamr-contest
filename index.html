@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>مسابقة مطاعم جمر التنور الدولية</title>
+<style>
+body {
+  font-family: Tahoma, Arial;
+  background: #f6f6f6;
+}
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+h2 {
+  text-align: center;
+}
+input, select, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+button {
+  background: #ff6a4d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h2>🎉 مسابقة مطاعم جمر التنور الدولية</h2>
+
+  <form id="contestForm">
+    <input type="text" name="name" placeholder="الاسم" required>
+
+    <input type="tel" name="phone" placeholder="رقم الجوال 05xxxxxxxx"
+      pattern="05[0-9]{8}" required>
+
+    <select name="branch" required>
+      <option value="">اختر الفرع</option>
+      <option>السويدي الغربي</option>
+      <option>طويق</option>
+    </select>
+
+    <button type="submit">تسجيل</button>
+  </form>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+document.getElementById("contestForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  fetch("https://jamraltanour.app.n8n.cloud/webhook-test/bc615df5-497d-4e09-a25b-5c4e27ebd46c", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: this.name.value,
+      phone: this.phone.value,
+      branch: this.branch.value
+    })
+  })
+  .then(() => {
+    document.getElementById("msg").innerText = "تم تسجيلك بنجاح 🎉";
+    this.reset();
+  });
+});
+</script>
+</body>
+</html>
